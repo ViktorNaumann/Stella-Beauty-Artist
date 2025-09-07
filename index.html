@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stella Beauty Artist - Professionelle Beauty-Ergebnisse</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <h2>Stella Beauty Artist</h2>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#home">Start</a></li>
+                <li><a href="#about">Über mich</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#gallery">Galerie</a></li>
+                <li><a href="#certificates">Zertifikate</a></li>
+                <li><a href="#contact">Kontakt</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>Dein Beauty Artist für professionelle Ergebnisse</h1>
+            <p>Ich mache deine innere Schönheit sichtbar.</p>
+            <a href="#contact" class="cta-button">Jetzt kontaktieren</a>
+        </div>
+        <div class="hero-image">
+            <!-- Hauptbild von Stella -->
+            <img src="images/hero-image.jpg" alt="Stella Beauty Artist" />
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-text">
+                    <h2>Über mich</h2>
+                    <blockquote class="quote">
+                        "Schönheit kommt von innen und lässt sich von außen hervorheben"
+                        <cite>- Stella Nikolov</cite>
+                    </blockquote>
+                    <p>Hi, ich bin Stella Nikolov und meine Mission ist es, DEINE innere Schönheit sichtbar zu machen und aus dir rauszuholen!</p>
+                    <p>Für mich bedeutet Beauty Selfcare und Selflove. Zudem boostet es dein Selbstbewusstsein und Selbstvertrauen! Wenn du dich in deiner Haut schön fühlst, strahlst du das auch automatisch aus.</p>
+                    <p>Mir ist vor allem wichtig, dass du dich wohl fühlst, deine innere Schönheit zeigen kannst und dein schönstes Ich lebst!</p>
+                    <p>Ich erschaffe die Schnittstelle zwischen deiner inneren und äußeren Schönheit und verbinde sie miteinander - das ist meine Superkraft. ;)</p>
+                    <div class="experience">
+                        <div class="exp-item">
+                            <i class="fas fa-heart"></i>
+                            <span>Zertifizierte Beauty Artistin</span>
+                        </div>
+                        <div class="exp-item">
+                            <i class="fas fa-star"></i>
+                            <span>Professionell & Hygienisch</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-image">
+                    <!-- Porträtbild von Stella -->
+                    <img src="images/about-stella.jpg" alt="Stella Nikolov - Beauty Artist" />
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section id="gallery" class="gallery">
+        <div class="container">
+            <h2>Meine Arbeiten</h2>
+            <p class="gallery-subtitle">Entdecke die Verwandlungen und professionellen Ergebnisse</p>
+            
+            <div class="gallery-filter">
+                <button class="filter-btn active" data-filter="all">Alle</button>
+                <button class="filter-btn" data-filter="bridal">Brautstyling</button>
+                <button class="filter-btn" data-filter="makeup">Makeup</button>
+                <button class="filter-btn" data-filter="lashes">Lashes & Brows</button>
+                <button class="filter-btn" data-filter="before-after">Vorher/Nachher</button>
+            </div>
+
+            <div class="gallery-grid">
+                <!-- Brautstyling -->
+                <div class="gallery-item bridal">
+                    <img src="images/bridal-1.jpg" alt="Brautstyling 1" />
+                    <div class="overlay">
+                        <h3>Romantisches Brautstyling</h3>
+                        <p>Natürlicher Look mit eleganter Hochsteckfrisur</p>
+                    </div>
+                </div>
+
+                <div class="gallery-item bridal">
+                    <img src="images/bridal-2.jpg" alt="Brautstyling 2" />
+                    <div class="overlay">
+                        <h3>Modernes Braut-Makeup</h3>
+                        <p>Zeitloser Look für den besonderen Tag</p>
+                    </div>
+                </div>
+
+                <!-- Makeup -->
+                <div class="gallery-item makeup">
+                    <img src="images/makeup-1.jpg" alt="Event Makeup" />
+                    <div class="overlay">
+                        <h3>Event-Makeup</h3>
+                        <p>Glamouröser Look für besondere Anlässe</p>
+                    </div>
+                </div>
+
+                <div class="gallery-item makeup">
+                    <img src="images/makeup-2.jpg" alt="Fotoshooting Makeup" />
+                    <div class="overlay">
+                        <h3>Fotoshooting-Styling</h3>
+                        <p>Perfekt für Kamera und Licht optimiert</p>
+                    </div>
+                </div>
+
+                <!-- Lashes & Brows -->
+                <div class="gallery-item lashes">
+                    <img src="images/lashes-1.jpg" alt="Wimpernlifting" />
+                    <div class="overlay">
+                        <h3>Wimpernlifting</h3>
+                        <p>Natürlich schöne, geschwungene Wimpern</p>
+                    </div>
+                </div>
+
+                <div class="gallery-item lashes">
+                    <img src="images/brows-1.jpg" alt="Augenbrauenlifting" />
+                    <div class="overlay">
+                        <h3>Augenbrauenlifting</h3>
+                        <p>Perfekt geformte und definierte Brauen</p>
+                    </div>
+                </div>
+
+                <!-- Vorher/Nachher -->
+                <div class="gallery-item before-after">
+                    <div class="before-after-container">
+                        <div class="before">
+                            <img src="images/before-1.jpg" alt="Vorher" />
+                            <span class="label">Vorher</span>
+                        </div>
+                        <div class="after">
+                            <img src="images/after-1.jpg" alt="Nachher" />
+                            <span class="label">Nachher</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="gallery-item before-after">
+                    <div class="before-after-container">
+                        <div class="before">
+                            <img src="images/before-2.jpg" alt="Vorher" />
+                            <span class="label">Vorher</span>
+                        </div>
+                        <div class="after">
+                            <img src="images/after-2.jpg" alt="Nachher" />
+                            <span class="label">Nachher</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="services">
+        <div class="container">
+            <h2>Services im Überblick</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <i class="fas fa-crown"></i>
+                    <h3>Brautstyling</h3>
+                    <p>Mein Ziel ist es, deine Wünsche zu verstehen und ein maßgeschneidertes Styling zu kreieren, das deine individuelle Schönheit und Persönlichkeit unterstreicht.</p>
+                    <ul>
+                        <li>Individuelles Braut-Makeup</li>
+                        <li>Professionelles Hairstyling</li>
+                        <li>Probe-Styling verfügbar</li>
+                        <li>Mobiler Service</li>
+                    </ul>
+                    <a href="#contact" class="service-btn">Jetzt buchen</a>
+                </div>
+                <div class="service-card">
+                    <i class="fas fa-palette"></i>
+                    <h3>Hair & Makeup</h3>
+                    <p>Du hast ein Event, bist eingeladen oder hast ein Foto Shooting geplant und brauchst ein professionelles Makeup und Hairstyling? Dann bist du hier genau richtig!</p>
+                    <ul>
+                        <li>Event-Makeup</li>
+                        <li>Fotoshooting-Styling</li>
+                        <li>Firmen-Events</li>
+                        <li>Besondere Anlässe</li>
+                    </ul>
+                    <a href="#contact" class="service-btn">Jetzt buchen</a>
+                </div>
+                <div class="service-card">
+                    <i class="fas fa-eye"></i>
+                    <h3>Lashes & Brows</h3>
+                    <p>Du möchtest mehr aus deinem Look machen, ohne dafür viel zu tun oder dich zu schminken? Dann ist ein Wimpern- und Augenbrauenlifting genau das was du brauchst!</p>
+                    <ul>
+                        <li>Wimpernlifting</li>
+                        <li>Augenbrauenlifting</li>
+                        <li>Optische Verjüngung</li>
+                        <li>Langanhaltende Ergebnisse</li>
+                    </ul>
+                    <a href="#contact" class="service-btn">Jetzt buchen</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Certificates Section -->
+    <section id="certificates" class="certificates">
+        <div class="container">
+            <h2>Zertifiziert durch</h2>
+            <p class="certificates-subtitle">Professionelle Ausbildung und kontinuierliche Weiterbildung</p>
+            <div class="certificates-grid">
+                <div class="certificate-card">
+                    <img src="images/certificate-1.jpg" alt="Beauty Zertifikat 1" />
+                    <h3>Professional Beauty Artist</h3>
+                    <p>Zertifizierte Ausbildung</p>
+                </div>
+                <div class="certificate-card">
+                    <img src="images/certificate-2.jpg" alt="Makeup Zertifikat" />
+                    <h3>Makeup Artist Diploma</h3>
+                    <p>Professionelle Makeup-Techniken</p>
+                </div>
+                <div class="certificate-card">
+                    <img src="images/certificate-3.jpg" alt="Lashes & Brows Zertifikat" />
+                    <h3>Lashes & Brows Specialist</h3>
+                    <p>Wimpern- und Augenbrauenbehandlung</p>
+                </div>
+                <div class="certificate-card">
+                    <img src="images/certificate-4.jpg" alt="Hygiene Zertifikat" />
+                    <h3>Hygiene & Sterilisation</h3>
+                    <p>Höchste Hygienestandards</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2>Kontaktiere mich</h2>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <h3>Vereinbare jetzt deinen Termin</h3>
+                    <p>Kontaktiere mich jetzt und wir vereinbaren einen Termin für dein Upgrade! Dabei arbeite ich ausnahmslos hygienisch und professionell!</p>
+                    
+                    <div class="contact-details">
+                        <div class="contact-item">
+                            <i class="fas fa-phone"></i>
+                            <span>0176 / 728 59 298</span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-envelope"></i>
+                            <span>info@stellabeautyartist.de</span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Mobiler Service verfügbar</span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-clock"></i>
+                            <span>Nach Terminvereinbarung</span>
+                        </div>
+                    </div>
+
+                    <div class="social-links">
+                        <a href="https://www.instagram.com/stellabeautyartist/" target="_blank"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.facebook.com/BeautyArtistStella" target="_blank"><i class="fab fa-facebook"></i></a>
+                    </div>
+                </div>
+
+                <form class="contact-form" id="contactForm">
+                    <div class="form-group">
+                        <input type="text" id="firstname" name="firstname" required>
+                        <label for="firstname">Vorname *</label>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="lastname" name="lastname" required>
+                        <label for="lastname">Nachname *</label>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" id="email" name="email" required>
+                        <label for="email">E-Mail-Adresse *</label>
+                    </div>
+                    <div class="form-group">
+                        <select id="service" name="service" required>
+                            <option value="">Service wählen *</option>
+                            <option value="brautstyling">Brautstyling</option>
+                            <option value="makeup">Hair & Makeup</option>
+                            <option value="lashes">Lashes & Brows</option>
+                            <option value="workshop">Workshop</option>
+                            <option value="sonstiges">Sonstiges</option>
+                        </select>
+                        <label for="service">Wunsch-Service *</label>
+                    </div>
+                    <div class="form-group">
+                        <input type="date" id="appointmentDate" name="appointmentDate">
+                        <label for="appointmentDate">Wunschdatum</label>
+                    </div>
+                    <div class="form-group">
+                        <textarea id="message" name="message" rows="5" required></textarea>
+                        <label for="message">Nachricht *</label>
+                    </div>
+                    <button type="submit" class="submit-btn">Nachricht senden</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-info">
+                    <h3>Stella Beauty Artist</h3>
+                    <p>Professionelle Beauty-Ergebnisse</p>
+                </div>
+                <div class="footer-links">
+                    <a href="#">Impressum</a>
+                    <a href="#">Datenschutz</a>
+                    <a href="#">AGBs</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Stella Beauty Artist. Alle Rechte vorbehalten.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
