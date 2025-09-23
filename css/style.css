@@ -165,10 +165,16 @@ h3 {
     padding: 100px 20px 50px;
 }
 
+.hero-container {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    width: 100%;
+}
+
 .hero-content {
     flex: 1;
     max-width: 600px;
-    margin-right: 2rem;
 }
 
 .hero-content h1 {
@@ -1038,8 +1044,12 @@ h3 {
         padding: 120px 20px 50px;
     }
 
+    .hero-container {
+        flex-direction: column;
+        gap: 2rem;
+    }
+
     .hero-content {
-        margin-right: 0;
         margin-bottom: 2rem;
     }
 
