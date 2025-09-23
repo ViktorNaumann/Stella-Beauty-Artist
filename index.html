@@ -92,32 +92,14 @@
                 </a>
             </div>
             <div class="hero-slideshow">
-            <!-- Vollständige Hero Slideshow -->
-            <div id="heroSlideshow" style="
-                width: 100%;
-                height: 500px;
-                border-radius: 20px;
-                overflow: hidden;
-                box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-                background: #f0f0f0;
-                position: relative;
-            ">
-                <!-- Bild wird hier von JavaScript eingefügt -->
+            <!-- Optimierte Hero Slideshow -->
+            <div id="heroSlideshow">
+                <!-- Bilder werden hier von JavaScript eingefügt -->
             </div>
             
             <!-- Navigation Dots -->
-            <div style="display: flex; justify-content: center; gap: 10px; margin-top: 20px;">
-                <span id="dot-0" onclick="goToSlide(0)" style="width: 12px; height: 12px; border-radius: 50%; background: linear-gradient(45deg, #c665dd, #ff9a56); cursor: pointer; box-shadow: 0 0 10px rgba(198, 101, 221, 0.5);"></span>
-                <span id="dot-1" onclick="goToSlide(1)" style="width: 12px; height: 12px; border-radius: 50%; background: rgba(255, 255, 255, 0.5); cursor: pointer;"></span>
-                <span id="dot-2" onclick="goToSlide(2)" style="width: 12px; height: 12px; border-radius: 50%; background: rgba(255, 255, 255, 0.5); cursor: pointer;"></span>
-                <span id="dot-3" onclick="goToSlide(3)" style="width: 12px; height: 12px; border-radius: 50%; background: rgba(255, 255, 255, 0.5); cursor: pointer;"></span>
-                <span id="dot-4" onclick="goToSlide(4)" style="width: 12px; height: 12px; border-radius: 50%; background: rgba(255, 255, 255, 0.5); cursor: pointer;"></span>
-                <span id="dot-5" onclick="goToSlide(5)" style="width: 12px; height: 12px; border-radius: 50%; background: rgba(255, 255, 255, 0.5); cursor: pointer;"></span>
-                <span id="dot-6" onclick="goToSlide(6)" style="width: 12px; height: 12px; border-radius: 50%; background: rgba(255, 255, 255, 0.5); cursor: pointer;"></span>
-                <span id="dot-7" onclick="goToSlide(7)" style="width: 12px; height: 12px; border-radius: 50%; background: rgba(255, 255, 255, 0.5); cursor: pointer;"></span>
-                <span id="dot-8" onclick="goToSlide(8)" style="width: 12px; height: 12px; border-radius: 50%; background: rgba(255, 255, 255, 0.5); cursor: pointer;"></span>
-                <span id="dot-9" onclick="goToSlide(9)" style="width: 12px; height: 12px; border-radius: 50%; background: rgba(255, 255, 255, 0.5); cursor: pointer;"></span>
-                <span id="dot-10" onclick="goToSlide(10)" style="width: 12px; height: 12px; border-radius: 50%; background: rgba(255, 255, 255, 0.5); cursor: pointer;"></span>
+            <div class="slideshow-dots" id="slideshowDots">
+                <!-- Dots werden von JavaScript generiert -->
             </div>
         </div>
         </div>
@@ -452,7 +434,7 @@
 
     <script src="js/script.js"></script>
     <script>
-        // Hero Slideshow mit allen Bildern
+        // Optimierte Hero Slideshow mit flüssigen Übergängen
         const heroImages = [
             'images/Hero_Section/038.webp',
             'images/Hero_Section/039.webp', 
@@ -469,71 +451,83 @@
         
         let currentSlideIndex = 0;
         let slideInterval;
+        let slideshowImages = [];
         
         function createSlideshow() {
             const container = document.getElementById('heroSlideshow');
-            if (!container) return;
+            const dotsContainer = document.getElementById('slideshowDots');
             
-            // Erstelle das erste Bild
-            showSlide(0);
+            if (!container || !dotsContainer) return;
             
-            // Starte automatischen Wechsel
-            startAutoSlide();
-        }
-        
-        function showSlide(index) {
-            const container = document.getElementById('heroSlideshow');
-            if (!container) return;
-            
-            // Erstelle das Bild-Element
-            const img = document.createElement('img');
-            img.src = heroImages[index];
-            img.style.cssText = `
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-                border-radius: 20px;
-                transition: opacity 0.5s ease-in-out;
-            `;
-            
-            // Fallback wenn Bild nicht lädt
-            img.onerror = function() {
-                container.innerHTML = `
-                    <div style="
-                        width: 100%;
-                        height: 100%;
+            // Erstelle alle Bilder-Elemente im Voraus
+            heroImages.forEach((imageSrc, index) => {
+                const img = document.createElement('img');
+                img.src = imageSrc;
+                img.className = 'slideshow-image';
+                img.alt = `Portfolio Bild ${index + 1}`;
+                img.loading = 'lazy'; // Lazy loading für bessere Performance
+                
+                // Setze das erste Bild als aktiv
+                if (index === 0) {
+                    img.classList.add('active');
+                    img.loading = 'eager'; // Erstes Bild sofort laden
+                }
+                
+                // Fallback wenn Bild nicht lädt
+                img.onerror = function() {
+                    const placeholder = document.createElement('div');
+                    placeholder.className = 'slideshow-image';
+                    if (index === 0) {
+                        placeholder.classList.add('active');
+                    }
+                    placeholder.style.cssText = `
                         background: linear-gradient(45deg, #c665dd, #ff9a56);
                         display: flex;
                         align-items: center;
                         justify-content: center;
                         color: white;
                         font-size: 1.5rem;
-                        border-radius: 20px;
-                    ">
-                        Portfolio Bild ${index + 1}<br>📸
-                    </div>
-                `;
-            };
+                        text-align: center;
+                    `;
+                    placeholder.innerHTML = `Portfolio Bild ${index + 1}<br>📸`;
+                    
+                    container.replaceChild(placeholder, img);
+                    slideshowImages[index] = placeholder;
+                };
+                
+                container.appendChild(img);
+                slideshowImages.push(img);
+                
+                // Erstelle Navigation Dot
+                const dot = document.createElement('span');
+                dot.className = 'dot';
+                if (index === 0) {
+                    dot.classList.add('active');
+                }
+                dot.addEventListener('click', () => goToSlide(index));
+                dotsContainer.appendChild(dot);
+            });
             
-            // Ersetze den Container-Inhalt
-            container.innerHTML = '';
-            container.appendChild(img);
-            
-            // Update navigation dots
-            updateDots(index);
+            // Starte automatischen Wechsel
+            startAutoSlide();
         }
         
-        function updateDots(activeIndex) {
-            for (let i = 0; i < heroImages.length; i++) {
-                const dot = document.getElementById(`dot-${i}`);
+        function showSlide(index) {
+            // Entferne active-Klasse von allen Bildern und Dots
+            slideshowImages.forEach((img, i) => {
+                img.classList.remove('active');
+                const dot = document.querySelector(`#slideshowDots .dot:nth-child(${i + 1})`);
                 if (dot) {
-                    if (i === activeIndex) {
-                        dot.style.background = 'linear-gradient(45deg, #c665dd, #ff9a56)';
-                        dot.style.boxShadow = '0 0 10px rgba(198, 101, 221, 0.5)';
-                    } else {
-                        dot.style.background = 'rgba(255, 255, 255, 0.5)';
-                        dot.style.boxShadow = 'none';
-                    }
+                    dot.classList.remove('active');
+                }
+            });
+            
+            // Setze neues aktives Bild und Dot
+            if (slideshowImages[index]) {
+                slideshowImages[index].classList.add('active');
+                const activeDot = document.querySelector(`#slideshowDots .dot:nth-child(${index + 1})`);
+                if (activeDot) {
+                    activeDot.classList.add('active');
                 }
             }
         }
@@ -558,10 +552,23 @@
             startAutoSlide();
         }
         
-        // Starte die Slideshow
-        document.addEventListener('DOMContentLoaded', createSlideshow);
+        // Pausiere Slideshow bei Hover (optional)
+        document.addEventListener('DOMContentLoaded', function() {
+            createSlideshow();
+            
+            const container = document.getElementById('heroSlideshow');
+            if (container) {
+                container.addEventListener('mouseenter', () => {
+                    clearInterval(slideInterval);
+                });
+                
+                container.addEventListener('mouseleave', () => {
+                    startAutoSlide();
+                });
+            }
+        });
         
-        console.log('Hero Slideshow geladen mit', heroImages.length, 'Bildern');
+        console.log('Optimierte Hero Slideshow geladen mit', heroImages.length, 'Bildern');
     </script>
 </body>
 </html>

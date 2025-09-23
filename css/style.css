@@ -40,7 +40,7 @@ body {
 }
 
 .container {
-    max-width: 1200px;
+    max-width: 1400px; /* Größere Container-Breite */
     margin: 0 auto;
     padding: 0 20px;
 }
@@ -415,8 +415,60 @@ h3 {
 .hero-slideshow {
     flex: 1;
     position: relative;
-    max-width: 600px;
-    margin: 0 auto;
+    max-width: 100%; /* Volle Breite nutzen */
+    margin: 0 15px; /* Margin statt Padding für Abstand */
+}
+
+/* Hero Slideshow Container */
+#heroSlideshow {
+    width: 100%;
+    height: 700px; /* Größere Höhe für beeindruckendere Bilder */
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    background: #f0f0f0;
+    position: relative;
+}
+
+/* Slideshow Images */
+.slideshow-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 20px;
+    opacity: 0;
+    transition: opacity 0.8s ease-in-out;
+    z-index: 1;
+}
+
+.slideshow-image.active {
+    opacity: 1;
+    z-index: 2;
+}
+
+/* Navigation Dots Container */
+.slideshow-dots {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.dot.active {
+    background: linear-gradient(45deg, #c665dd, #ff9a56);
+    box-shadow: 0 0 10px rgba(198, 101, 221, 0.5);
 }
 
 /* About Section */
@@ -1205,6 +1257,20 @@ h3 {
 }
 
 /* Responsive Design */
+/* Tablet Styles */
+@media (max-width: 1024px) and (min-width: 769px) {
+    #heroSlideshow {
+        height: 600px; /* Größere Höhe für Tablets */
+    }
+    
+    .hero-slideshow {
+        max-width: none; /* Keine maximale Breite */
+        width: calc(100vw - 30px); /* Volle Viewport-Breite minus 30px */
+        margin: 0 15px; /* 15px Margin für Abstand */
+    }
+}
+
+/* Mobile Styles */
 @media (max-width: 768px) {
     .nav-menu {
         position: fixed;
@@ -1264,6 +1330,23 @@ h3 {
 
     .hero-slideshow {
         order: 0; /* Slideshow kommt zuerst */
+        max-width: none; /* Keine maximale Breite */
+        width: calc(100vw - 30px); /* Volle Viewport-Breite minus 30px */
+        margin: 0 15px; /* 15px Margin für Abstand */
+        position: relative;
+        left: 0;
+    }
+
+    /* Mobile Slideshow Optimierung */
+    #heroSlideshow {
+        height: 450px; /* Deutlich größere Höhe für mobile Geräte */
+    }
+
+    .slideshow-image {
+        /* Ensure images load smoothly on mobile */
+        will-change: opacity;
+        backface-visibility: hidden;
+        -webkit-backface-visibility: hidden;
     }
 
     .hero-highlights {
@@ -1280,11 +1363,6 @@ h3 {
     .trust-item {
         flex: 1;
         min-width: 80px;
-    }
-
-    .hero-slideshow {
-        max-width: 100%;
-        margin: 0 auto;
     }
 
     h1 {
