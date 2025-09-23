@@ -477,6 +477,15 @@ h3 {
     background: var(--white);
 }
 
+.about-title {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 2.5rem;
+    margin-bottom: 1rem; /* Kleinerer Abstand zum Bild */
+    text-align: center;
+    color: var(--primary-color);
+}
+
 .about-content {
     display: flex;
     align-items: center;
@@ -1376,6 +1385,22 @@ h3 {
     .about-content {
         flex-direction: column;
         text-align: center;
+    }
+
+    /* Mobile Überschrift mit kleinerem Abstand */
+    .about-title {
+        margin-bottom: 0.5rem; /* Noch kleinerer Abstand für Mobile */
+    }
+
+    /* Mobile Reihenfolge für About Section */
+    .about-image {
+        order: 1; /* Bild kommt nach der Überschrift (die außerhalb steht) */
+        margin: 0.2rem 0 0.5rem 0; /* Sehr kleine Abstände: oben 0.2rem, unten 0.5rem */
+    }
+
+    .about-text {
+        order: 2; /* Text-Content als letztes */
+        margin-top: 0; /* Kein zusätzlicher Abstand oben */
     }
 
     .contact-content {
