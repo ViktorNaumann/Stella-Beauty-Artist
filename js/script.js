@@ -440,10 +440,50 @@ document.addEventListener('DOMContentLoaded', function() {
     const modal = document.getElementById('certificateModal');
     const modalImg = document.getElementById('modalImage');
     const closeBtn = document.querySelector('.close');
+    const prevBtn = document.getElementById('prevCertificate');
+    const nextBtn = document.getElementById('nextCertificate');
+    const currentIndexSpan = document.getElementById('currentIndex');
+    const totalCertificatesSpan = document.getElementById('totalCertificates');
+    
+    let currentCertificateIndex = 0;
+    const certificateImages = [];
 
     console.log('Found certificate cards:', certificateCards.length); // Debug log
-    console.log('Modal element:', modal); // Debug log
-    console.log('Modal image element:', modalImg); // Debug log
+    
+    // Collect all certificate images
+    certificateCards.forEach((card, index) => {
+        const img = card.querySelector('img');
+        if (img) {
+            certificateImages.push({
+                src: img.src,
+                alt: img.alt || `Zertifikat ${index + 1}`
+            });
+        }
+    });
+
+    // Set total certificates count
+    if (totalCertificatesSpan) {
+        totalCertificatesSpan.textContent = certificateImages.length;
+    }
+
+    // Function to show certificate at specific index
+    function showCertificate(index) {
+        if (index < 0) index = certificateImages.length - 1;
+        if (index >= certificateImages.length) index = 0;
+        
+        currentCertificateIndex = index;
+        
+        if (modalImg && certificateImages[index]) {
+            modalImg.src = certificateImages[index].src;
+            modalImg.alt = certificateImages[index].alt;
+        }
+        
+        if (currentIndexSpan) {
+            currentIndexSpan.textContent = index + 1;
+        }
+        
+        console.log(`Showing certificate ${index + 1} of ${certificateImages.length}`);
+    }
 
     // Add click event to each certificate card
     certificateCards.forEach((card, index) => {
@@ -452,22 +492,35 @@ document.addEventListener('DOMContentLoaded', function() {
             e.preventDefault();
             e.stopPropagation();
             
-            console.log('Certificate card clicked'); // Debug log
-            const img = this.querySelector('img');
-            console.log('Found image:', img); // Debug log
+            console.log('Certificate card clicked, index:', index); // Debug log
             
-            if (img && modal && modalImg) {
-                console.log('Setting modal image src to:', img.src); // Debug log
-                modalImg.src = img.src;
-                modalImg.alt = img.alt;
+            if (modal && modalImg) {
+                currentCertificateIndex = index;
+                showCertificate(index);
                 modal.style.display = 'block';
-                document.body.style.overflow = 'hidden'; // Prevent body scrolling
+                document.body.style.overflow = 'hidden';
                 console.log('Modal should be visible now'); // Debug log
-            } else {
-                console.error('Missing elements:', { img, modal, modalImg });
             }
         });
     });
+
+    // Previous certificate button
+    if (prevBtn) {
+        prevBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            console.log('Previous button clicked');
+            showCertificate(currentCertificateIndex - 1);
+        });
+    }
+
+    // Next certificate button
+    if (nextBtn) {
+        nextBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            console.log('Next button clicked');
+            showCertificate(currentCertificateIndex + 1);
+        });
+    }
 
     // Close modal when clicking the close button
     if (closeBtn) {
@@ -489,12 +542,20 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Close modal with Escape key
+    // Keyboard navigation
     document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape' && modal && modal.style.display === 'block') {
-            console.log('Escape key pressed'); // Debug log
-            modal.style.display = 'none';
-            document.body.style.overflow = 'auto';
+        if (modal && modal.style.display === 'block') {
+            if (e.key === 'Escape') {
+                console.log('Escape key pressed'); // Debug log
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            } else if (e.key === 'ArrowLeft') {
+                console.log('Left arrow pressed');
+                showCertificate(currentCertificateIndex - 1);
+            } else if (e.key === 'ArrowRight') {
+                console.log('Right arrow pressed');
+                showCertificate(currentCertificateIndex + 1);
+            }
         }
     });
 });
