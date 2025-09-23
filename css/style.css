@@ -6,14 +6,28 @@
 }
 
 :root {
-    --primary-color: #d4af8c;
-    --secondary-color: #f5f5f5;
-    --accent-color: #8b6341;
-    --text-dark: #333;
-    --text-light: #666;
+    /* Brand Colors from Design Guide */
+    --primary-color: #543928;      /* #54392c - Dunkelbraun */
+    --secondary-color: #996b58;    /* #996b58 - Mittelbraun */
+    --tertiary-color: #cbb2a3;    /* #cbb2a3 - Hellbraun */
+    --accent-color: #ffcbcb;       /* #ffcbcb - Rosa */
+    --light-accent: #faf6f5;      /* #faf6f5 - Sehr helles Rosa */
+    
+    /* Neutral Colors */
+    --text-dark: #2c2c2c;
+    --text-light: #6b6b6b;
     --white: #ffffff;
-    --gradient: linear-gradient(135deg, #d4af8c 0%, #8b6341 100%);
-    --shadow: 0 10px 30px rgba(0,0,0,0.1);
+    --background-light: #faf8f7;
+    
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, #543928 0%, #996b58 100%);
+    --gradient-soft: linear-gradient(135deg, #cbb2a3 0%, #ffcbcb 100%);
+    --gradient-accent: linear-gradient(135deg, #ffcbcb 0%, #faf6f5 100%);
+    
+    /* Effects */
+    --shadow: 0 10px 30px rgba(84, 57, 40, 0.15);
+    --shadow-light: 0 5px 15px rgba(84, 57, 40, 0.08);
+    --shadow-hover: 0 15px 40px rgba(84, 57, 40, 0.25);
     --transition: all 0.3s ease;
 }
 
@@ -22,6 +36,7 @@ body {
     line-height: 1.6;
     color: var(--text-dark);
     overflow-x: hidden;
+    background-color: var(--background-light);
 }
 
 .container {
@@ -45,7 +60,7 @@ h2 {
     font-size: 2.5rem;
     margin-bottom: 2rem;
     text-align: center;
-    color: var(--accent-color);
+    color: var(--primary-color);
 }
 
 h3 {
@@ -75,10 +90,23 @@ h3 {
     align-items: center;
 }
 
-.nav-logo h2 {
-    color: var(--primary-color);
-    font-size: 2rem;
-    margin: 0;
+.nav-logo {
+    display: flex;
+    align-items: center;
+}
+
+.nav-logo .logo-img {
+    height: 50px;
+    width: auto;
+    transition: var(--transition);
+    opacity: 1 !important;
+    visibility: visible !important;
+    display: block !important;
+    max-width: 200px;
+}
+
+.nav-logo .logo-img:hover {
+    transform: scale(1.05);
 }
 
 .nav-menu {
@@ -159,7 +187,7 @@ h3 {
 
 .cta-button {
     display: inline-block;
-    background: var(--gradient);
+    background: var(--gradient-primary);
     color: var(--white);
     padding: 15px 30px;
     text-decoration: none;
@@ -167,11 +195,14 @@ h3 {
     font-weight: 600;
     transition: var(--transition);
     box-shadow: var(--shadow);
+    border: 2px solid transparent;
 }
 
 .cta-button:hover {
     transform: translateY(-2px);
-    box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+    box-shadow: var(--shadow-hover);
+    background: var(--secondary-color);
+    border-color: var(--primary-color);
 }
 
 .hero-image {
@@ -203,14 +234,14 @@ h3 {
 }
 
 .quote {
-    background: var(--secondary-color);
+    background: var(--gradient-accent);
     padding: 2rem;
     border-radius: 15px;
     border-left: 4px solid var(--primary-color);
     margin: 2rem 0;
     font-style: italic;
     font-size: 1.1rem;
-    color: var(--accent-color);
+    color: var(--primary-color);
 }
 
 .quote cite {
@@ -218,7 +249,7 @@ h3 {
     margin-top: 1rem;
     font-size: 0.9rem;
     font-weight: 600;
-    color: var(--primary-color);
+    color: var(--secondary-color);
     font-style: normal;
 }
 
@@ -238,12 +269,12 @@ h3 {
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    color: var(--accent-color);
+    color: var(--primary-color);
     font-weight: 600;
 }
 
 .exp-item i {
-    color: var(--primary-color);
+    color: var(--secondary-color);
     font-size: 1.2rem;
 }
 
@@ -1191,6 +1222,13 @@ html {
 
 .certificate-card:hover {
     transform: translateY(-5px) !important;
+}
+
+/* Ensure logo is always visible */
+.nav-logo .logo-img {
+    opacity: 1 !important;
+    visibility: visible !important;
+    display: block !important;
 }
 
 /* Loading Animation */
