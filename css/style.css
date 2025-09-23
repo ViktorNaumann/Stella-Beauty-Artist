@@ -205,16 +205,11 @@ h3 {
     border-color: var(--primary-color);
 }
 
-.hero-image {
+.hero-slideshow {
     flex: 1;
-    text-align: center;
-}
-
-.hero-image img {
-    max-width: 100%;
-    height: auto;
-    border-radius: 20px;
-    box-shadow: var(--shadow);
+    position: relative;
+    max-width: 600px;
+    margin: 0 auto;
 }
 
 /* About Section */
@@ -1046,6 +1041,11 @@ h3 {
     .hero-content {
         margin-right: 0;
         margin-bottom: 2rem;
+    }
+
+    .hero-slideshow {
+        max-width: 100%;
+        margin: 0 auto;
     }
 
     h1 {

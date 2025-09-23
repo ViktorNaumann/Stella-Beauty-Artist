@@ -38,9 +38,34 @@
             <p>Ich mache deine innere Schönheit sichtbar.</p>
             <a href="#contact" class="cta-button">Jetzt kontaktieren</a>
         </div>
-        <div class="hero-image">
-            <!-- Hauptbild von Stella -->
-            <img src="images/hero-image.jpg" alt="Stella Beauty Artist" />
+        <div class="hero-slideshow">
+            <!-- Vollständige Hero Slideshow -->
+            <div id="heroSlideshow" style="
+                width: 100%;
+                height: 500px;
+                border-radius: 20px;
+                overflow: hidden;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+                background: #f0f0f0;
+                position: relative;
+            ">
+                <!-- Bild wird hier von JavaScript eingefügt -->
+            </div>
+            
+            <!-- Navigation Dots -->
+            <div style="display: flex; justify-content: center; gap: 10px; margin-top: 20px;">
+                <span id="dot-0" onclick="goToSlide(0)" style="width: 12px; height: 12px; border-radius: 50%; background: linear-gradient(45deg, #c665dd, #ff9a56); cursor: pointer; box-shadow: 0 0 10px rgba(198, 101, 221, 0.5);"></span>
+                <span id="dot-1" onclick="goToSlide(1)" style="width: 12px; height: 12px; border-radius: 50%; background: rgba(255, 255, 255, 0.5); cursor: pointer;"></span>
+                <span id="dot-2" onclick="goToSlide(2)" style="width: 12px; height: 12px; border-radius: 50%; background: rgba(255, 255, 255, 0.5); cursor: pointer;"></span>
+                <span id="dot-3" onclick="goToSlide(3)" style="width: 12px; height: 12px; border-radius: 50%; background: rgba(255, 255, 255, 0.5); cursor: pointer;"></span>
+                <span id="dot-4" onclick="goToSlide(4)" style="width: 12px; height: 12px; border-radius: 50%; background: rgba(255, 255, 255, 0.5); cursor: pointer;"></span>
+                <span id="dot-5" onclick="goToSlide(5)" style="width: 12px; height: 12px; border-radius: 50%; background: rgba(255, 255, 255, 0.5); cursor: pointer;"></span>
+                <span id="dot-6" onclick="goToSlide(6)" style="width: 12px; height: 12px; border-radius: 50%; background: rgba(255, 255, 255, 0.5); cursor: pointer;"></span>
+                <span id="dot-7" onclick="goToSlide(7)" style="width: 12px; height: 12px; border-radius: 50%; background: rgba(255, 255, 255, 0.5); cursor: pointer;"></span>
+                <span id="dot-8" onclick="goToSlide(8)" style="width: 12px; height: 12px; border-radius: 50%; background: rgba(255, 255, 255, 0.5); cursor: pointer;"></span>
+                <span id="dot-9" onclick="goToSlide(9)" style="width: 12px; height: 12px; border-radius: 50%; background: rgba(255, 255, 255, 0.5); cursor: pointer;"></span>
+                <span id="dot-10" onclick="goToSlide(10)" style="width: 12px; height: 12px; border-radius: 50%; background: rgba(255, 255, 255, 0.5); cursor: pointer;"></span>
+            </div>
         </div>
     </section>
 
@@ -372,5 +397,117 @@
     </footer>
 
     <script src="js/script.js"></script>
+    <script>
+        // Hero Slideshow mit allen Bildern
+        const heroImages = [
+            'images/Hero_Section/038.webp',
+            'images/Hero_Section/039.webp', 
+            'images/Hero_Section/040.webp',
+            'images/Hero_Section/041.webp',
+            'images/Hero_Section/048.webp',
+            'images/Hero_Section/049.webp',
+            'images/Hero_Section/050.webp',
+            'images/Hero_Section/052.webp',
+            'images/Hero_Section/DSC_8239.webp',
+            'images/Hero_Section/image01679.webp',
+            'images/Hero_Section/StellaBeautyArtist_Styling2.jpeg'
+        ];
+        
+        let currentSlideIndex = 0;
+        let slideInterval;
+        
+        function createSlideshow() {
+            const container = document.getElementById('heroSlideshow');
+            if (!container) return;
+            
+            // Erstelle das erste Bild
+            showSlide(0);
+            
+            // Starte automatischen Wechsel
+            startAutoSlide();
+        }
+        
+        function showSlide(index) {
+            const container = document.getElementById('heroSlideshow');
+            if (!container) return;
+            
+            // Erstelle das Bild-Element
+            const img = document.createElement('img');
+            img.src = heroImages[index];
+            img.style.cssText = `
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                border-radius: 20px;
+                transition: opacity 0.5s ease-in-out;
+            `;
+            
+            // Fallback wenn Bild nicht lädt
+            img.onerror = function() {
+                container.innerHTML = `
+                    <div style="
+                        width: 100%;
+                        height: 100%;
+                        background: linear-gradient(45deg, #c665dd, #ff9a56);
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        color: white;
+                        font-size: 1.5rem;
+                        border-radius: 20px;
+                    ">
+                        Portfolio Bild ${index + 1}<br>📸
+                    </div>
+                `;
+            };
+            
+            // Ersetze den Container-Inhalt
+            container.innerHTML = '';
+            container.appendChild(img);
+            
+            // Update navigation dots
+            updateDots(index);
+        }
+        
+        function updateDots(activeIndex) {
+            for (let i = 0; i < heroImages.length; i++) {
+                const dot = document.getElementById(`dot-${i}`);
+                if (dot) {
+                    if (i === activeIndex) {
+                        dot.style.background = 'linear-gradient(45deg, #c665dd, #ff9a56)';
+                        dot.style.boxShadow = '0 0 10px rgba(198, 101, 221, 0.5)';
+                    } else {
+                        dot.style.background = 'rgba(255, 255, 255, 0.5)';
+                        dot.style.boxShadow = 'none';
+                    }
+                }
+            }
+        }
+        
+        function goToSlide(index) {
+            currentSlideIndex = index;
+            showSlide(index);
+            resetAutoSlide();
+        }
+        
+        function nextSlide() {
+            currentSlideIndex = (currentSlideIndex + 1) % heroImages.length;
+            showSlide(currentSlideIndex);
+        }
+        
+        function startAutoSlide() {
+            slideInterval = setInterval(nextSlide, 4000);
+        }
+        
+        function resetAutoSlide() {
+            clearInterval(slideInterval);
+            startAutoSlide();
+        }
+        
+        // Starte die Slideshow
+        document.addEventListener('DOMContentLoaded', createSlideshow);
+        
+        console.log('Hero Slideshow geladen mit', heroImages.length, 'Bildern');
+    </script>
 </body>
 </html>
