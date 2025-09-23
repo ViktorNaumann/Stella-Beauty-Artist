@@ -215,9 +215,12 @@ const observer = new IntersectionObserver((entries) => {
 
 // Observe elements for animation
 document.addEventListener('DOMContentLoaded', () => {
-    const animateElements = document.querySelectorAll('.service-card, .certificate-card, .gallery-item');
+    const animateElements = document.querySelectorAll('.service-card, .gallery-item');
     animateElements.forEach(el => {
-        observer.observe(el);
+        // Exclude images in about section and certificate cards from animation
+        if (!el.closest('.about-image') && !el.classList.contains('certificate-card')) {
+            observer.observe(el);
+        }
     });
 });
 
@@ -428,3 +431,70 @@ function openLightbox(src, alt) {
         }
     });
 }
+
+// Certificate Modal Functionality
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('Certificate modal script loaded'); // Debug log
+    
+    const certificateCards = document.querySelectorAll('.certificate-card');
+    const modal = document.getElementById('certificateModal');
+    const modalImg = document.getElementById('modalImage');
+    const closeBtn = document.querySelector('.close');
+
+    console.log('Found certificate cards:', certificateCards.length); // Debug log
+    console.log('Modal element:', modal); // Debug log
+    console.log('Modal image element:', modalImg); // Debug log
+
+    // Add click event to each certificate card
+    certificateCards.forEach((card, index) => {
+        console.log(`Setting up card ${index}`); // Debug log
+        card.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            console.log('Certificate card clicked'); // Debug log
+            const img = this.querySelector('img');
+            console.log('Found image:', img); // Debug log
+            
+            if (img && modal && modalImg) {
+                console.log('Setting modal image src to:', img.src); // Debug log
+                modalImg.src = img.src;
+                modalImg.alt = img.alt;
+                modal.style.display = 'block';
+                document.body.style.overflow = 'hidden'; // Prevent body scrolling
+                console.log('Modal should be visible now'); // Debug log
+            } else {
+                console.error('Missing elements:', { img, modal, modalImg });
+            }
+        });
+    });
+
+    // Close modal when clicking the close button
+    if (closeBtn) {
+        closeBtn.addEventListener('click', function() {
+            console.log('Close button clicked'); // Debug log
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto'; // Re-enable body scrolling
+        });
+    }
+
+    // Close modal when clicking outside the image
+    if (modal) {
+        modal.addEventListener('click', function(e) {
+            if (e.target === modal) {
+                console.log('Clicked outside modal content'); // Debug log
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        });
+    }
+
+    // Close modal with Escape key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && modal && modal.style.display === 'block') {
+            console.log('Escape key pressed'); // Debug log
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+    });
+});
