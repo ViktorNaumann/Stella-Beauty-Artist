@@ -1259,6 +1259,11 @@ h3 {
 
     .hero-content {
         margin-bottom: 2rem;
+        order: 1; /* Content kommt nach der Slideshow */
+    }
+
+    .hero-slideshow {
+        order: 0; /* Slideshow kommt zuerst */
     }
 
     .hero-highlights {
