@@ -6,28 +6,28 @@
 }
 
 :root {
-    /* Brand Colors from Design Guide */
-    --primary-color: #543928;      /* #54392c - Dunkelbraun */
-    --secondary-color: #996b58;    /* #996b58 - Mittelbraun */
-    --tertiary-color: #cbb2a3;    /* #cbb2a3 - Hellbraun */
-    --accent-color: #ffcbcb;       /* #ffcbcb - Rosa */
-    --light-accent: #faf6f5;      /* #faf6f5 - Sehr helles Rosa */
+    /* Brand Colors from Design Guide - Exact from Image */
+    --primary-color: #54392e;      /* #54392e - Dunkelbraun (exakt vom Bild) */
+    --secondary-color: #996b58;    /* #996b58 - Mittelbraun (exakt vom Bild) */
+    --tertiary-color: #cbb2a3;    /* #cbb2a3 - Hellbraun (exakt vom Bild) */
+    --accent-color: #ffebec;       /* #ffebec - Rosa (exakt vom Bild) */
+    --light-accent: #faf6f5;      /* #faf6f5 - Sehr helles Rosa (exakt vom Bild) */
     
     /* Neutral Colors */
-    --text-dark: #2c2c2c;
-    --text-light: #6b6b6b;
+    --text-dark: #54392e;         /* Dunkler Text in Hauptfarbe */
+    --text-light: #996b58;        /* Heller Text in Sekundärfarbe */
     --white: #ffffff;
-    --background-light: #faf8f7;
+    --background-light: #faf6f5;  /* Hintergrund in hellster Farbe */
     
     /* Gradients */
-    --gradient-primary: linear-gradient(135deg, #543928 0%, #996b58 100%);
-    --gradient-soft: linear-gradient(135deg, #cbb2a3 0%, #ffcbcb 100%);
-    --gradient-accent: linear-gradient(135deg, #ffcbcb 0%, #faf6f5 100%);
+    --gradient-primary: linear-gradient(135deg, #54392e 0%, #996b58 100%);
+    --gradient-soft: linear-gradient(135deg, #cbb2a3 0%, #ffebec 100%);
+    --gradient-accent: linear-gradient(135deg, #ffebec 0%, #faf6f5 100%);
     
     /* Effects */
-    --shadow: 0 10px 30px rgba(84, 57, 40, 0.15);
-    --shadow-light: 0 5px 15px rgba(84, 57, 40, 0.08);
-    --shadow-hover: 0 15px 40px rgba(84, 57, 40, 0.25);
+    --shadow: 0 10px 30px rgba(84, 57, 46, 0.15);
+    --shadow-light: 0 5px 15px rgba(84, 57, 46, 0.08);
+    --shadow-hover: 0 15px 40px rgba(84, 57, 46, 0.25);
     --transition: all 0.3s ease;
 }
 
@@ -161,7 +161,7 @@ h3 {
     min-height: 100vh;
     display: flex;
     align-items: center;
-    background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
+    background: var(--gradient-accent);
     padding: 100px 20px 50px;
     position: relative;
     overflow: hidden;
@@ -426,7 +426,7 @@ h3 {
     border-radius: 20px;
     overflow: hidden;
     box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-    background: #f0f0f0;
+    background: var(--light-accent);
     position: relative;
 }
 
@@ -467,8 +467,8 @@ h3 {
 }
 
 .dot.active {
-    background: linear-gradient(45deg, #c665dd, #ff9a56);
-    box-shadow: 0 0 10px rgba(198, 101, 221, 0.5);
+    background: var(--gradient-primary);
+    box-shadow: 0 0 10px rgba(84, 57, 46, 0.5);
 }
 
 /* About Section */
@@ -725,7 +725,7 @@ h3 {
     text-align: center;
     box-shadow: var(--shadow);
     transition: var(--transition);
-    border: 1px solid #f0f0f0;
+    border: 1px solid var(--accent-color);
 }
 
 .service-card:hover {
@@ -1146,7 +1146,7 @@ h3 {
 .form-group select {
     width: 100%;
     padding: 15px;
-    border: 2px solid #e0e0e0;
+    border: 2px solid var(--tertiary-color);
     border-radius: 10px;
     font-size: 1rem;
     transition: var(--transition);
