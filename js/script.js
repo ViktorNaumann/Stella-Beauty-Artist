@@ -1,3 +1,210 @@
+// Scroll Animations System
+class ScrollAnimations {
+    constructor() {
+        this.observerOptions = {
+            threshold: 0.05,
+            rootMargin: '0px 0px 50px 0px'  // Trigger earlier, especially on mobile
+        };
+        
+        this.init();
+    }
+    
+    init() {
+        // Initialize observers
+        this.setupScrollObserver();
+        this.setupImageRevealObserver();
+        
+        // Add animation classes to elements
+        this.prepareElements();
+    }
+    
+    setupScrollObserver() {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const element = entry.target;
+                    const animationType = element.getAttribute('data-animation');
+                    const delay = element.getAttribute('data-delay') || 0;
+                    
+                    // Ensure element is visible immediately on mobile
+                    if (window.innerWidth <= 768) {
+                        element.style.visibility = 'visible';
+                        element.style.display = 'block';
+                    }
+                    
+                    setTimeout(() => {
+                        element.classList.add('animate-in');
+                        // Force visibility after animation
+                        element.style.visibility = 'visible';
+                        element.style.opacity = '1';
+                    }, parseInt(delay));
+                    
+                    // Unobserve after animation
+                    observer.unobserve(element);
+                }
+            });
+        }, this.observerOptions);
+        
+        // Observe all elements with animation attributes
+        document.querySelectorAll('[data-animation]').forEach(el => {
+            observer.observe(el);
+        });
+    }
+    
+    setupImageRevealObserver() {
+        const imageObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const img = entry.target;
+                    
+                    // Create placeholder effect with random direction
+                    setTimeout(() => {
+                        this.createImageRevealEffect(img);
+                    }, Math.random() * 300);
+                    
+                    imageObserver.unobserve(img);
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -20px 0px' });
+        
+        // Observe images
+        document.querySelectorAll('.gallery-item img, .about-image img, .hero-slideshow img').forEach(img => {
+            imageObserver.observe(img);
+        });
+    }
+    
+    createImageRevealEffect(img) {
+        // Skip if already processed
+        if (img.classList.contains('revealed')) return;
+        
+        const container = img.parentElement;
+        container.style.position = 'relative';
+        container.style.overflow = 'hidden';
+        
+        // Random reveal directions for variety
+        const directions = ['left', 'right', 'top', 'bottom'];
+        const randomDirection = directions[Math.floor(Math.random() * directions.length)];
+        
+        // Create multiple animated overlays for a more complex effect
+        const overlays = [];
+        const colors = [
+            'linear-gradient(45deg, var(--tertiary-color), var(--accent-color))',
+            'linear-gradient(135deg, var(--secondary-color), var(--tertiary-color))',
+            'linear-gradient(90deg, #f0f0f0, #e0e0e0)'
+        ];
+        
+        for (let i = 0; i < 3; i++) {
+            const overlay = document.createElement('div');
+            overlay.className = `image-reveal-overlay overlay-${i}`;
+            
+            let transform = '';
+            switch (randomDirection) {
+                case 'left':
+                    transform = `translateX(-100%)`;
+                    break;
+                case 'right':
+                    transform = `translateX(100%)`;
+                    break;
+                case 'top':
+                    transform = `translateY(-100%)`;
+                    break;
+                case 'bottom':
+                    transform = `translateY(100%)`;
+                    break;
+            }
+            
+            overlay.style.cssText = `
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: ${colors[i]};
+                z-index: ${3 - i};
+                transform: translateX(0) translateY(0);
+                transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+                transition-delay: ${i * 0.1}s;
+            `;
+            
+            container.appendChild(overlay);
+            overlays.push(overlay);
+            
+            // Trigger animation
+            setTimeout(() => {
+                overlay.style.transform = transform;
+            }, 100 + (i * 150));
+        }
+        
+        // Add reveal animation to image with creative effects
+        const effects = ['scale', 'rotate', 'skew'];
+        const randomEffect = effects[Math.floor(Math.random() * effects.length)];
+        
+        let initialTransform = '';
+        switch (randomEffect) {
+            case 'scale':
+                initialTransform = 'scale(1.2)';
+                break;
+            case 'rotate':
+                initialTransform = 'scale(1.1) rotate(3deg)';
+                break;
+            case 'skew':
+                initialTransform = 'scale(1.1) skew(2deg, 1deg)';
+                break;
+        }
+        
+        img.style.transform = initialTransform;
+        img.style.filter = 'blur(2px) brightness(0.8)';
+        img.style.transition = 'all 1.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+        
+        setTimeout(() => {
+            img.style.transform = 'scale(1) rotate(0deg) skew(0deg, 0deg)';
+            img.style.filter = 'blur(0) brightness(1)';
+            img.classList.add('revealed');
+        }, 300);
+        
+        // Remove overlays after animation
+        setTimeout(() => {
+            overlays.forEach(overlay => overlay.remove());
+        }, 1500);
+    }
+    
+    prepareElements() {
+        // TEMPORARILY DISABLED - Just ensure all elements are visible
+        const sections = document.querySelectorAll('section');
+        sections.forEach((section, index) => {
+            section.style.display = 'block';
+            section.style.visibility = 'visible';
+            section.style.opacity = '1';
+            section.style.transform = 'none';
+        });
+        
+        // Make sure all content elements are visible
+        document.querySelectorAll('h1, h2, h3, h4, h5, h6, p, .service-item, .gallery-item, .certificate-item').forEach((element) => {
+            element.style.opacity = '1';
+            element.style.visibility = 'visible';
+            element.style.display = 'block';
+            element.style.transform = 'none';
+        });
+        
+        // Add subtle parallax effect only
+        // this.setupParallaxElements();
+    }
+    
+    setupParallaxElements() {
+        const parallaxElements = document.querySelectorAll('.hero-background .geometric-shape');
+        
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const rate = scrolled * -0.5;
+            
+            parallaxElements.forEach((element, index) => {
+                const speed = 0.3 + (index * 0.2);
+                element.style.transform = `translate3d(0, ${rate * speed}px, 0)`;
+            });
+        });
+    }
+}
+
 // Mobile Navigation
 const hamburger = document.querySelector('.hamburger');
 const navMenu = document.querySelector('.nav-menu');
@@ -585,4 +792,35 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
     });
+});
+
+// Initialize Scroll Animations
+document.addEventListener('DOMContentLoaded', () => {
+    // EMERGENCY FIX: Make all content visible immediately
+    document.querySelectorAll('section, [data-animation]').forEach(element => {
+        element.style.opacity = '1';
+        element.style.visibility = 'visible';
+        element.style.display = 'block';
+        element.style.transform = 'none';
+    });
+    
+    // Initialize animations with safety net
+    try {
+        if (window.innerWidth > 768) {
+            new ScrollAnimations();
+        }
+    } catch (error) {
+        console.log('Animation system disabled for compatibility');
+    }
+    
+    // Ultimate fallback - ensure ALL sections are visible
+    setTimeout(() => {
+        document.querySelectorAll('#services, #certificates, #contact').forEach(section => {
+            section.style.display = 'block !important';
+            section.style.visibility = 'visible !important';
+            section.style.opacity = '1 !important';
+            section.style.position = 'static !important';
+            section.style.zIndex = 'auto';
+        });
+    }, 100);
 });

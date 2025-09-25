@@ -31,18 +31,38 @@
     --transition: all 0.3s ease;
 }
 
+html {
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+    width: 100%;
+}
+
 body {
     font-family: 'Open Sans', sans-serif;
     line-height: 1.6;
     color: var(--text-dark);
     overflow-x: hidden;
     background-color: var(--background-light);
+    width: 100%;
+    max-width: 100vw;
 }
 
 .container {
     max-width: 1400px; /* Größere Container-Breite */
     margin: 0 auto;
     padding: 0 20px;
+    width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+/* Mobile Container Fix */
+@media (max-width: 768px) {
+    .container {
+        max-width: 100vw;
+        padding: 0 15px;
+        overflow-x: hidden;
+    }
 }
 
 /* Typography */
@@ -1575,4 +1595,333 @@ html {
 
 .fade-in-up {
     animation: fadeInUp 0.6s ease forwards;
+}
+
+/* ===================================
+   SCROLL ANIMATIONS
+   =================================== */
+
+/* EMERGENCY FIX: Ensure all content is visible */
+section {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    position: static !important;
+}
+
+#services, #certificates, #contact {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+/* Base animation states - DISABLED for now */
+[data-animation] {
+    opacity: 1 !important;
+    transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    will-change: transform, opacity;
+    width: 100%;
+    max-width: 100%;
+    overflow: visible;
+    display: block !important;
+    visibility: visible !important;
+}
+
+[data-animation].animate-in {
+    opacity: 1;
+}
+
+/* ANIMATIONS TEMPORARILY DISABLED TO FIX VISIBILITY */
+
+/* Fade Up Animation */
+[data-animation="fade-up"] {
+    transform: none !important;
+}
+
+[data-animation="fade-up"].animate-in {
+    transform: none !important;
+}
+
+/* Slide In Left Animation */
+[data-animation="slide-in-left"] {
+    transform: none !important;
+}
+
+[data-animation="slide-in-left"].animate-in {
+    transform: none !important;
+}
+
+/* Slide In Right Animation */
+[data-animation="slide-in-right"] {
+    transform: none !important;
+}
+
+[data-animation="slide-in-right"].animate-in {
+    transform: none !important;
+}
+
+/* Scale In Animation */
+[data-animation="scale-in"] {
+    transform: scale(0.8);
+}
+
+[data-animation="scale-in"].animate-in {
+    transform: scale(1);
+}
+
+/* Rotate In Animation */
+[data-animation="rotate-in"] {
+    transform: rotate(-10deg) scale(0.8);
+}
+
+[data-animation="rotate-in"].animate-in {
+    transform: rotate(0deg) scale(1);
+}
+
+/* Image Reveal Overlay Animation */
+@keyframes slideAwayReveal {
+    0% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.8;
+    }
+    100% {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+}
+
+/* Advanced Image Animations */
+.gallery-item img,
+.about-image img,
+.hero-slideshow img {
+    transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.gallery-item {
+    overflow: hidden;
+    border-radius: 15px;
+}
+
+.gallery-item img {
+    transform: scale(1.05);
+    filter: blur(1px);
+    transition: all 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.gallery-item img.revealed {
+    transform: scale(1);
+    filter: blur(0);
+}
+
+/* Staggered Animation Delays */
+.service-item:nth-child(1) { animation-delay: 0.1s; }
+.service-item:nth-child(2) { animation-delay: 0.2s; }
+.service-item:nth-child(3) { animation-delay: 0.3s; }
+.service-item:nth-child(4) { animation-delay: 0.4s; }
+
+.gallery-item:nth-child(1) { animation-delay: 0.1s; }
+.gallery-item:nth-child(2) { animation-delay: 0.2s; }
+.gallery-item:nth-child(3) { animation-delay: 0.3s; }
+.gallery-item:nth-child(4) { animation-delay: 0.4s; }
+.gallery-item:nth-child(5) { animation-delay: 0.5s; }
+.gallery-item:nth-child(6) { animation-delay: 0.6s; }
+
+/* FORCE ALL SECTIONS TO BE VISIBLE */
+section {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    width: 100%;
+    position: static !important;
+    z-index: auto !important;
+    overflow: visible !important;
+    transform: none !important;
+}
+
+/* Specific fixes for problem sections */
+#services {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    height: auto !important;
+    min-height: 500px;
+}
+
+#certificates {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    height: auto !important;
+    min-height: 500px;
+}
+
+#contact {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    height: auto !important;
+    min-height: 500px;
+}
+
+/* Text Animation Effects */
+@keyframes textSlideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-60px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes textSlideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(60px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes textFadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Special Hero Image Animation */
+.hero-slideshow img {
+    transform: scale(1.1);
+    opacity: 0.9;
+    transition: all 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.hero-slideshow img.revealed {
+    transform: scale(1);
+    opacity: 1;
+}
+
+/* Certificate Animation */
+.certificate-item {
+    transform: rotateY(15deg) scale(0.9);
+    transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.certificate-item.animate-in {
+    transform: rotateY(0deg) scale(1);
+}
+
+/* About Me Image Special Effect */
+.about-image {
+    overflow: hidden;
+    position: relative;
+}
+
+.about-image img {
+    transform: scale(1.1) rotate(2deg);
+    transition: all 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.about-image img.revealed {
+    transform: scale(1) rotate(0deg);
+}
+
+/* Service Items Enhanced Animation */
+.service-item {
+    transform: translateY(40px) scale(0.95);
+    transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.service-item.animate-in {
+    transform: translateY(0) scale(1);
+}
+
+/* Performance Optimizations */
+.hero-background .geometric-shape {
+    will-change: transform;
+}
+
+[data-animation] {
+    will-change: transform, opacity;
+}
+
+.gallery-item img,
+.about-image img,
+.hero-slideshow img {
+    will-change: transform, filter;
+}
+
+/* Smooth transforms for better performance */
+* {
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+}
+
+/* Prevent layout shift during animations */
+.image-reveal-overlay {
+    contain: layout style paint;
+}
+
+/* Enhanced smooth scrolling */
+@supports (scroll-behavior: smooth) {
+    html {
+        scroll-behavior: smooth;
+    }
+}
+
+/* Mobile Animation Fixes */
+@media (max-width: 768px) {
+    [data-animation="slide-in-left"] {
+        transform: translateX(-30px);
+    }
+    
+    [data-animation="slide-in-right"] {
+        transform: translateX(30px);
+    }
+    
+    [data-animation="fade-up"] {
+        transform: translateY(30px);
+    }
+    
+    /* Ensure no horizontal overflow on mobile */
+    [data-animation] {
+        max-width: calc(100vw - 30px);
+        overflow: visible;
+    }
+    
+    /* Fix for sections visibility */
+    section {
+        width: 100%;
+        display: block !important;
+        visibility: visible !important;
+        overflow: visible !important;
+    }
+}
+
+/* Reduced motion accessibility */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+    
+    [data-animation] {
+        animation: none !important;
+        transition: none !important;
+        opacity: 1 !important;
+        transform: none !important;
+    }
 }
