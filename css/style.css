@@ -49,6 +49,7 @@ body {
 h1, h2, h3 {
     font-family: 'Playfair Display', serif;
     font-weight: 700;
+    color: var(--primary-color); /* Alle Überschriften in der dunkelsten Farbe */
 }
 
 h1 {
@@ -60,7 +61,6 @@ h2 {
     font-size: 2.5rem;
     margin-bottom: 2rem;
     text-align: center;
-    color: var(--primary-color);
 }
 
 h3 {
@@ -248,12 +248,10 @@ h3 {
 }
 
 .hero-content h1 {
-    background: var(--gradient-primary);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: var(--primary-color);
     margin-bottom: 1rem;
     line-height: 1.2;
+    font-weight: 700;
 }
 
 .hero-subtitle {
@@ -740,7 +738,7 @@ h3 {
 }
 
 .service-card h3 {
-    color: var(--accent-color);
+    color: var(--primary-color);
     margin-bottom: 1rem;
 }
 
@@ -1079,7 +1077,7 @@ h3 {
 }
 
 .contact-info h3 {
-    color: var(--accent-color);
+    color: var(--primary-color);
     margin-bottom: 1rem;
 }
 
@@ -1226,7 +1224,7 @@ h3 {
 }
 
 .footer-info h3 {
-    color: var(--accent-color);
+    color: var(--white);
     margin-bottom: 0.5rem;
 }
 
