@@ -199,28 +199,127 @@ style.textContent = `
 `;
 document.head.appendChild(style);
 
-// Intersection Observer for animations
-const observerOptions = {
-    threshold: 0.1,
-    rootMargin: '0px 0px -50px 0px'
-};
-
-const observer = new IntersectionObserver((entries) => {
+// Enhanced Intersection Observer for scroll animations
+const scrollAnimationObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
-            entry.target.classList.add('fade-in-up');
+            const element = entry.target;
+            
+            // Add the appropriate animation class based on element's data attribute
+            const animationType = element.getAttribute('data-animate') || 'fade-in-up';
+            element.classList.add(animationType);
+            
+            // Add delay classes for staggered animations
+            const delay = element.getAttribute('data-delay');
+            if (delay) {
+                element.classList.add(`animate-delay-${delay}`);
+            }
+            
+            // Unobserve after animation starts to improve performance
+            scrollAnimationObserver.unobserve(element);
+            
+            // Clean up will-change property after animation completes
+            setTimeout(() => {
+                element.style.willChange = 'auto';
+            }, 1000);
         }
     });
-}, observerOptions);
+}, {
+    threshold: 0.15,
+    rootMargin: '0px 0px -80px 0px'
+});
 
-// Observe elements for animation
+// Enhanced scroll animation system
 document.addEventListener('DOMContentLoaded', () => {
-    const animateElements = document.querySelectorAll('.service-card, .gallery-item');
-    animateElements.forEach(el => {
-        // Exclude images in about section and certificate cards from animation
-        if (!el.closest('.about-image') && !el.classList.contains('certificate-card')) {
-            observer.observe(el);
+    // Initialize all elements that should animate on scroll
+    const elementsToAnimate = document.querySelectorAll(`
+        .about-text,
+        .about-image,
+        .service-card,
+        .gallery-item:not(.certificate-card),
+        .contact-info,
+        .contact-form,
+        .hero-highlights .highlight-item,
+        .trust-elements .trust-item,
+        .quote,
+        .certificates-grid .certificate-card
+    `);
+    
+    elementsToAnimate.forEach((element, index) => {
+        // Skip elements that should not animate (logo, slideshow images, etc.)
+        if (element.closest('.nav-logo') || 
+            element.classList.contains('slideshow-image') ||
+            element.closest('#heroSlideshow')) {
+            return;
         }
+        
+        // Add base animation class
+        element.classList.add('scroll-animate');
+        
+        // Determine animation type based on element type and position
+        let animationType = 'fade-in-up';
+        
+        // Special animation types for different elements
+        if (element.classList.contains('about-text')) {
+            animationType = 'fade-in-left';
+        } else if (element.classList.contains('about-image')) {
+            animationType = 'fade-in-right';
+        } else if (element.classList.contains('contact-info')) {
+            animationType = 'fade-in-left';
+        } else if (element.classList.contains('contact-form')) {
+            animationType = 'fade-in-right';
+        } else if (element.classList.contains('quote')) {
+            animationType = 'scale-in';
+        } else if (element.classList.contains('highlight-item') || 
+                   element.classList.contains('trust-item')) {
+            animationType = 'fade-in-up';
+            // Add staggered delays for highlight items
+            const delay = (index % 3) + 1;
+            element.setAttribute('data-delay', delay);
+        }
+        
+        element.setAttribute('data-animate', animationType);
+        scrollAnimationObserver.observe(element);
+    });
+    
+    // Special handling for service cards with staggered animation
+    const serviceCards = document.querySelectorAll('.service-card');
+    serviceCards.forEach((card, index) => {
+        card.classList.add('scroll-animate');
+        card.setAttribute('data-animate', 'fade-in-up');
+        card.setAttribute('data-delay', (index + 1));
+        scrollAnimationObserver.observe(card);
+    });
+    
+    // Special handling for gallery items with alternating animations
+    const galleryItems = document.querySelectorAll('.gallery-item:not(.certificate-card)');
+    galleryItems.forEach((item, index) => {
+        item.classList.add('scroll-animate');
+        
+        // Alternate between left and right animations
+        const animationType = index % 2 === 0 ? 'fade-in-left' : 'fade-in-right';
+        item.setAttribute('data-animate', animationType);
+        
+        // Add slight delay for staggered effect
+        const delayGroup = Math.floor(index / 2) + 1;
+        if (delayGroup <= 5) {
+            item.setAttribute('data-delay', delayGroup);
+        }
+        
+        scrollAnimationObserver.observe(item);
+    });
+    
+    // Certificate cards with special scale animation
+    const certificateCards = document.querySelectorAll('.certificate-card');
+    certificateCards.forEach((card, index) => {
+        card.classList.add('scroll-animate');
+        card.setAttribute('data-animate', 'scale-in');
+        
+        // Staggered delays for certificates
+        const delay = (index % 5) + 1;
+        card.setAttribute('data-delay', delay);
+        
+        scrollAnimationObserver.observe(card);
     });
 });
 
