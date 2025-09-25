@@ -88,14 +88,28 @@
                 </a>
             </div>
             <div class="hero-slideshow">
-            <!-- Optimierte Hero Slideshow -->
+            <!-- Hero Slideshow -->
             <div id="heroSlideshow">
-                <!-- Bilder werden hier von JavaScript eingefügt -->
+                <img src="images/Hero_Section/050.webp" alt="Stella Beauty Artist Portfolio 1" class="slideshow-image active">
+                <img src="images/Hero_Section/052.webp" alt="Stella Beauty Artist Portfolio 2" class="slideshow-image">
+                <img src="images/Hero_Section/DSC_8239.webp" alt="Stella Beauty Artist Portfolio 3" class="slideshow-image">
+                <img src="images/Hero_Section/image00060.webp" alt="Stella Beauty Artist Portfolio 4" class="slideshow-image">
+                <img src="images/Hero_Section/image00061.webp" alt="Stella Beauty Artist Portfolio 5" class="slideshow-image">
+                <img src="images/Hero_Section/image00661.webp" alt="Stella Beauty Artist Portfolio 6" class="slideshow-image">
+                <img src="images/Hero_Section/image01679.webp" alt="Stella Beauty Artist Portfolio 7" class="slideshow-image">
+                <img src="images/Hero_Section/StellaBeautyArtist_Styling2.jpeg" alt="Stella Beauty Artist Portfolio 8" class="slideshow-image">
             </div>
             
             <!-- Navigation Dots -->
             <div class="slideshow-dots" id="slideshowDots">
-                <!-- Dots werden von JavaScript generiert -->
+                <div class="dot active"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
             </div>
         </div>
         </div>
@@ -429,142 +443,5 @@
     </footer>
 
     <script src="js/script.js"></script>
-    <script>
-        // Optimierte Hero Slideshow mit flüssigen Übergängen
-        const heroImages = [
-            'images/Hero_Section/038.webp',
-            'images/Hero_Section/039.webp', 
-            'images/Hero_Section/040.webp',
-            'images/Hero_Section/041.webp',
-            'images/Hero_Section/048.webp',
-            'images/Hero_Section/049.webp',
-            'images/Hero_Section/050.webp',
-            'images/Hero_Section/052.webp',
-            'images/Hero_Section/DSC_8239.webp',
-            'images/Hero_Section/image01679.webp',
-            'images/Hero_Section/StellaBeautyArtist_Styling2.jpeg'
-        ];
-        
-        let currentSlideIndex = 0;
-        let slideInterval;
-        let slideshowImages = [];
-        
-        function createSlideshow() {
-            const container = document.getElementById('heroSlideshow');
-            const dotsContainer = document.getElementById('slideshowDots');
-            
-            if (!container || !dotsContainer) return;
-            
-            // Erstelle alle Bilder-Elemente im Voraus
-            heroImages.forEach((imageSrc, index) => {
-                const img = document.createElement('img');
-                img.src = imageSrc;
-                img.className = 'slideshow-image';
-                img.alt = `Portfolio Bild ${index + 1}`;
-                img.loading = 'lazy'; // Lazy loading für bessere Performance
-                
-                // Setze das erste Bild als aktiv
-                if (index === 0) {
-                    img.classList.add('active');
-                    img.loading = 'eager'; // Erstes Bild sofort laden
-                }
-                
-                // Fallback wenn Bild nicht lädt
-                img.onerror = function() {
-                    const placeholder = document.createElement('div');
-                    placeholder.className = 'slideshow-image';
-                    if (index === 0) {
-                        placeholder.classList.add('active');
-                    }
-                    placeholder.style.cssText = `
-                        background: linear-gradient(45deg, #c665dd, #ff9a56);
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;
-                        color: white;
-                        font-size: 1.5rem;
-                        text-align: center;
-                    `;
-                    placeholder.innerHTML = `Portfolio Bild ${index + 1}<br>📸`;
-                    
-                    container.replaceChild(placeholder, img);
-                    slideshowImages[index] = placeholder;
-                };
-                
-                container.appendChild(img);
-                slideshowImages.push(img);
-                
-                // Erstelle Navigation Dot
-                const dot = document.createElement('span');
-                dot.className = 'dot';
-                if (index === 0) {
-                    dot.classList.add('active');
-                }
-                dot.addEventListener('click', () => goToSlide(index));
-                dotsContainer.appendChild(dot);
-            });
-            
-            // Starte automatischen Wechsel
-            startAutoSlide();
-        }
-        
-        function showSlide(index) {
-            // Entferne active-Klasse von allen Bildern und Dots
-            slideshowImages.forEach((img, i) => {
-                img.classList.remove('active');
-                const dot = document.querySelector(`#slideshowDots .dot:nth-child(${i + 1})`);
-                if (dot) {
-                    dot.classList.remove('active');
-                }
-            });
-            
-            // Setze neues aktives Bild und Dot
-            if (slideshowImages[index]) {
-                slideshowImages[index].classList.add('active');
-                const activeDot = document.querySelector(`#slideshowDots .dot:nth-child(${index + 1})`);
-                if (activeDot) {
-                    activeDot.classList.add('active');
-                }
-            }
-        }
-        
-        function goToSlide(index) {
-            currentSlideIndex = index;
-            showSlide(index);
-            resetAutoSlide();
-        }
-        
-        function nextSlide() {
-            currentSlideIndex = (currentSlideIndex + 1) % heroImages.length;
-            showSlide(currentSlideIndex);
-        }
-        
-        function startAutoSlide() {
-            slideInterval = setInterval(nextSlide, 3000);
-        }
-        
-        function resetAutoSlide() {
-            clearInterval(slideInterval);
-            startAutoSlide();
-        }
-        
-        // Pausiere Slideshow bei Hover (optional)
-        document.addEventListener('DOMContentLoaded', function() {
-            createSlideshow();
-            
-            const container = document.getElementById('heroSlideshow');
-            if (container) {
-                container.addEventListener('mouseenter', () => {
-                    clearInterval(slideInterval);
-                });
-                
-                container.addEventListener('mouseleave', () => {
-                    startAutoSlide();
-                });
-            }
-        });
-        
-        console.log('Optimierte Hero Slideshow geladen mit', heroImages.length, 'Bildern');
-    </script>
 </body>
 </html>

@@ -267,6 +267,12 @@ document.addEventListener('DOMContentLoaded', () => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 const img = entry.target;
+                // Skip slideshow images - they have their own opacity control
+                if (img.classList.contains('slideshow-image')) {
+                    imageObserver.unobserve(img);
+                    return;
+                }
+                
                 img.style.opacity = '0';
                 img.style.transition = 'opacity 0.3s ease';
                 
@@ -280,7 +286,10 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     
     images.forEach(img => {
-        imageObserver.observe(img);
+        // Skip slideshow images from lazy loading
+        if (!img.classList.contains('slideshow-image')) {
+            imageObserver.observe(img);
+        }
     });
 });
 
@@ -321,6 +330,41 @@ window.addEventListener('scroll', () => {
 // Loading screen (optional)
 window.addEventListener('load', () => {
     document.body.classList.add('loaded');
+});
+
+// Hero Slideshow für vorhandene Bilder
+document.addEventListener('DOMContentLoaded', function() {
+    const images = document.querySelectorAll('.slideshow-image');
+    const dots = document.querySelectorAll('.dot');
+    let currentSlide = 0;
+    
+    if (images.length === 0 || dots.length === 0) return;
+
+    function showSlide(index) {
+        // Entferne active-Klasse von allen Bildern und Dots
+        images.forEach(img => img.classList.remove('active'));
+        dots.forEach(dot => dot.classList.remove('active'));
+        
+        // Setze neues aktives Bild und Dot
+        images[index].classList.add('active');
+        dots[index].classList.add('active');
+    }
+
+    function nextSlide() {
+        currentSlide = (currentSlide + 1) % images.length;
+        showSlide(currentSlide);
+    }
+
+    // Dots klickbar machen
+    dots.forEach((dot, index) => {
+        dot.addEventListener('click', () => {
+            currentSlide = index;
+            showSlide(index);
+        });
+    });
+
+    // Automatischer Wechsel alle 4 Sekunden
+    setInterval(nextSlide, 4000);
 });
 
 // Contact form field focus effects
@@ -434,8 +478,6 @@ function openLightbox(src, alt) {
 
 // Certificate Modal Functionality
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('Certificate modal script loaded'); // Debug log
-    
     const certificateCards = document.querySelectorAll('.certificate-card');
     const modal = document.getElementById('certificateModal');
     const modalImg = document.getElementById('modalImage');
@@ -447,8 +489,6 @@ document.addEventListener('DOMContentLoaded', function() {
     
     let currentCertificateIndex = 0;
     const certificateImages = [];
-
-    console.log('Found certificate cards:', certificateCards.length); // Debug log
     
     // Collect all certificate images
     certificateCards.forEach((card, index) => {
@@ -481,25 +521,19 @@ document.addEventListener('DOMContentLoaded', function() {
         if (currentIndexSpan) {
             currentIndexSpan.textContent = index + 1;
         }
-        
-        console.log(`Showing certificate ${index + 1} of ${certificateImages.length}`);
     }
 
     // Add click event to each certificate card
     certificateCards.forEach((card, index) => {
-        console.log(`Setting up card ${index}`); // Debug log
         card.addEventListener('click', function(e) {
             e.preventDefault();
             e.stopPropagation();
-            
-            console.log('Certificate card clicked, index:', index); // Debug log
             
             if (modal && modalImg) {
                 currentCertificateIndex = index;
                 showCertificate(index);
                 modal.style.display = 'block';
                 document.body.style.overflow = 'hidden';
-                console.log('Modal should be visible now'); // Debug log
             }
         });
     });
@@ -508,7 +542,6 @@ document.addEventListener('DOMContentLoaded', function() {
     if (prevBtn) {
         prevBtn.addEventListener('click', function(e) {
             e.stopPropagation();
-            console.log('Previous button clicked');
             showCertificate(currentCertificateIndex - 1);
         });
     }
@@ -517,7 +550,6 @@ document.addEventListener('DOMContentLoaded', function() {
     if (nextBtn) {
         nextBtn.addEventListener('click', function(e) {
             e.stopPropagation();
-            console.log('Next button clicked');
             showCertificate(currentCertificateIndex + 1);
         });
     }
@@ -525,7 +557,6 @@ document.addEventListener('DOMContentLoaded', function() {
     // Close modal when clicking the close button
     if (closeBtn) {
         closeBtn.addEventListener('click', function() {
-            console.log('Close button clicked'); // Debug log
             modal.style.display = 'none';
             document.body.style.overflow = 'auto'; // Re-enable body scrolling
         });
@@ -535,7 +566,6 @@ document.addEventListener('DOMContentLoaded', function() {
     if (modal) {
         modal.addEventListener('click', function(e) {
             if (e.target === modal) {
-                console.log('Clicked outside modal content'); // Debug log
                 modal.style.display = 'none';
                 document.body.style.overflow = 'auto';
             }
@@ -546,14 +576,11 @@ document.addEventListener('DOMContentLoaded', function() {
     document.addEventListener('keydown', function(e) {
         if (modal && modal.style.display === 'block') {
             if (e.key === 'Escape') {
-                console.log('Escape key pressed'); // Debug log
                 modal.style.display = 'none';
                 document.body.style.overflow = 'auto';
             } else if (e.key === 'ArrowLeft') {
-                console.log('Left arrow pressed');
                 showCertificate(currentCertificateIndex - 1);
             } else if (e.key === 'ArrowRight') {
-                console.log('Right arrow pressed');
                 showCertificate(currentCertificateIndex + 1);
             }
         }
