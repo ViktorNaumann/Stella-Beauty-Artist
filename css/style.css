@@ -20,6 +20,7 @@
     --background-light: #faf6f5;  /* Hintergrund in hellster Farbe */
     
     /* Gradients */
+    --gradient: linear-gradient(135deg, #54392e 0%, #996b58 100%);
     --gradient-primary: linear-gradient(135deg, #54392e 0%, #996b58 100%);
     --gradient-soft: linear-gradient(135deg, #cbb2a3 0%, #ffebec 100%);
     --gradient-accent: linear-gradient(135deg, #ffebec 0%, #faf6f5 100%);
@@ -888,10 +889,6 @@ h3 {
     filter: brightness(1.1) contrast(1.1);
 }
 
-.certificate-card:hover img {
-    transform: scale(1.05);
-}
-
 .certificate-overlay {
     position: absolute;
     top: 0;
@@ -1578,10 +1575,6 @@ html {
     transform: none !important;
     visibility: visible !important;
     display: block !important;
-}
-
-.certificate-card:hover {
-    transform: translateY(-5px) !important;
 }
 
 /* Ensure logo is always visible */
