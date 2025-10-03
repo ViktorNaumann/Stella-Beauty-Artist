@@ -462,8 +462,8 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Automatischer Wechsel alle 4 Sekunden
-    setInterval(nextSlide, 4000);
+    // Automatischer Wechsel alle 2,5 Sekunden
+    setInterval(nextSlide, 2500);
 });
 
 // Contact form field focus effects
