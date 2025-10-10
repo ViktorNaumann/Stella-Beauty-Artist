@@ -1091,7 +1091,7 @@ h3 {
 
 .submit-btn {
     width: 100%;
-    background: var(--gradient);
+    background: var(--primary-color);
     color: var(--white);
     border: none;
     padding: 15px;
@@ -1105,6 +1105,7 @@ h3 {
 .submit-btn:hover {
     transform: translateY(-2px);
     box-shadow: var(--shadow);
+    opacity: 0.9;
 }
 
 /* Footer */
