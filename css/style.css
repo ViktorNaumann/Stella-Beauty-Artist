@@ -731,12 +731,6 @@ h3 {
     box-shadow: 0 20px 40px rgba(0,0,0,0.15);
 }
 
-.service-card i {
-    font-size: 3rem;
-    color: var(--primary-color);
-    margin-bottom: 1rem;
-}
-
 .service-card h3 {
     color: var(--primary-color);
     margin-bottom: 1rem;
