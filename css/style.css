@@ -992,41 +992,6 @@ h3 {
     color: var(--primary-color);
 }
 
-.modal-nav {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background: rgba(255, 255, 255, 0.1);
-    border: 2px solid rgba(255, 255, 255, 0.3);
-    color: var(--white);
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    backdrop-filter: blur(10px);
-    z-index: 2001;
-    font-size: 1.5rem;
-}
-
-.modal-nav:hover {
-    background: rgba(212, 175, 140, 0.8);
-    border-color: var(--primary-color);
-    transform: translateY(-50%) scale(1.1);
-    box-shadow: 0 5px 20px rgba(0,0,0,0.3);
-}
-
-.modal-prev {
-    left: 20px;
-}
-
-.modal-next {
-    right: 20px;
-}
-
 .modal-counter {
     position: absolute;
     bottom: 20px;
@@ -1472,20 +1437,6 @@ h3 {
         top: 5px;
         right: 15px;
         font-size: 30px;
-    }
-
-    .modal-nav {
-        width: 50px;
-        height: 50px;
-        font-size: 1.2rem;
-    }
-
-    .modal-prev {
-        left: 10px;
-    }
-
-    .modal-next {
-        right: 10px;
     }
 
     .modal-counter {

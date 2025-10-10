@@ -581,8 +581,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const modal = document.getElementById('certificateModal');
     const modalImg = document.getElementById('modalImage');
     const closeBtn = document.querySelector('.close');
-    const prevBtn = document.getElementById('prevCertificate');
-    const nextBtn = document.getElementById('nextCertificate');
     const currentIndexSpan = document.getElementById('currentIndex');
     const totalCertificatesSpan = document.getElementById('totalCertificates');
     
@@ -636,22 +634,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
-
-    // Previous certificate button
-    if (prevBtn) {
-        prevBtn.addEventListener('click', function(e) {
-            e.stopPropagation();
-            showCertificate(currentCertificateIndex - 1);
-        });
-    }
-
-    // Next certificate button
-    if (nextBtn) {
-        nextBtn.addEventListener('click', function(e) {
-            e.stopPropagation();
-            showCertificate(currentCertificateIndex + 1);
-        });
-    }
 
     // Close modal when clicking the close button
     if (closeBtn) {
