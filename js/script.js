@@ -435,7 +435,9 @@ window.addEventListener('load', () => {
 document.addEventListener('DOMContentLoaded', function() {
     const images = document.querySelectorAll('.slideshow-image');
     const dots = document.querySelectorAll('.dot');
+    const slideshowContainer = document.getElementById('heroSlideshow');
     let currentSlide = 0;
+    let autoSlideInterval;
     
     if (images.length === 0 || dots.length === 0) return;
 
@@ -454,16 +456,123 @@ document.addEventListener('DOMContentLoaded', function() {
         showSlide(currentSlide);
     }
 
+    function prevSlide() {
+        currentSlide = (currentSlide - 1 + images.length) % images.length;
+        showSlide(currentSlide);
+    }
+
     // Dots klickbar machen
     dots.forEach((dot, index) => {
         dot.addEventListener('click', () => {
             currentSlide = index;
             showSlide(index);
+            resetAutoSlide();
         });
     });
 
-    // Automatischer Wechsel alle 2,5 Sekunden
-    setInterval(nextSlide, 2500);
+    // Automatischer Wechsel alle 2 Sekunden
+    function startAutoSlide() {
+        autoSlideInterval = setInterval(nextSlide, 2000);
+    }
+
+    function resetAutoSlide() {
+        clearInterval(autoSlideInterval);
+        startAutoSlide();
+    }
+
+    startAutoSlide();
+
+    // Touch/Swipe functionality für Hero Slideshow
+    if (slideshowContainer) {
+        let touchStartX = 0;
+        let touchStartY = 0;
+        let touchEndX = 0;
+        let touchEndY = 0;
+
+        slideshowContainer.addEventListener('touchstart', function(e) {
+            touchStartX = e.changedTouches[0].screenX;
+            touchStartY = e.changedTouches[0].screenY;
+        });
+
+        slideshowContainer.addEventListener('touchmove', function(e) {
+            const currentX = e.changedTouches[0].screenX;
+            const currentY = e.changedTouches[0].screenY;
+            const diffX = currentX - touchStartX;
+            const diffY = currentY - touchStartY;
+            
+            // Nur horizontales Swipen ermöglichen
+            if (Math.abs(diffX) > Math.abs(diffY)) {
+                e.preventDefault();
+            }
+        }, { passive: false });
+
+        slideshowContainer.addEventListener('touchend', function(e) {
+            touchEndX = e.changedTouches[0].screenX;
+            touchEndY = e.changedTouches[0].screenY;
+            
+            const diffX = touchEndX - touchStartX;
+            const diffY = touchEndY - touchStartY;
+            
+            // Minimum Swipe-Distanz
+            const minSwipeDistance = 50;
+            
+            // Horizontales Swipen erkennen
+            if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > minSwipeDistance) {
+                if (diffX > 0) {
+                    // Swipe nach rechts - vorheriges Bild
+                    prevSlide();
+                } else {
+                    // Swipe nach links - nächstes Bild
+                    nextSlide();
+                }
+                // Auto-Slide Timer zurücksetzen nach manuellem Wischen
+                resetAutoSlide();
+            }
+        });
+
+        // Mouse/Desktop Swipe support (optional)
+        let mouseDown = false;
+        let mouseStartX = 0;
+
+        slideshowContainer.addEventListener('mousedown', function(e) {
+            mouseDown = true;
+            mouseStartX = e.clientX;
+            slideshowContainer.style.cursor = 'grabbing';
+        });
+
+        slideshowContainer.addEventListener('mousemove', function(e) {
+            if (!mouseDown) return;
+            e.preventDefault();
+        });
+
+        slideshowContainer.addEventListener('mouseup', function(e) {
+            if (!mouseDown) return;
+            mouseDown = false;
+            slideshowContainer.style.cursor = 'grab';
+            
+            const diffX = e.clientX - mouseStartX;
+            const minSwipeDistance = 50;
+            
+            if (Math.abs(diffX) > minSwipeDistance) {
+                if (diffX > 0) {
+                    prevSlide();
+                } else {
+                    nextSlide();
+                }
+                resetAutoSlide();
+            }
+        });
+
+        slideshowContainer.addEventListener('mouseleave', function() {
+            if (mouseDown) {
+                mouseDown = false;
+                slideshowContainer.style.cursor = 'grab';
+            }
+        });
+
+        // Cursor-Stil setzen
+        slideshowContainer.style.cursor = 'grab';
+    }
 });
 
 // Contact form field focus effects
