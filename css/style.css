@@ -867,8 +867,8 @@ h3 {
 
 .certificate-card img {
     width: 100%;
-    height: 350px;
-    object-fit: cover;
+    height: auto;
+    object-fit: contain;
     transition: all 0.4s ease;
     opacity: 1 !important;
     transform: none !important;
@@ -1449,7 +1449,8 @@ h3 {
     }
 
     .certificate-card img {
-        height: 280px;
+        height: auto;
+        max-height: none;
     }
 
     .certificate-overlay i {
@@ -1520,11 +1521,12 @@ h3 {
 
     .certificate-card {
         margin: 0 auto;
-        max-width: 320px;
+        max-width: 100%;
     }
 
     .certificate-card img {
-        height: 250px;
+        height: auto;
+        max-height: none;
     }
 
     .certificate-overlay i {
