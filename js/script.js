@@ -684,6 +684,135 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
     });
+
+    // Touch/Swipe functionality for mobile
+    if (modal && modalImg) {
+        let touchStartX = 0;
+        let touchStartY = 0;
+        let touchEndX = 0;
+        let touchEndY = 0;
+        let isDragging = false;
+
+        modalImg.addEventListener('touchstart', function(e) {
+            touchStartX = e.changedTouches[0].screenX;
+            touchStartY = e.changedTouches[0].screenY;
+            isDragging = false;
+        });
+
+        modalImg.addEventListener('touchmove', function(e) {
+            isDragging = true;
+            const currentX = e.changedTouches[0].screenX;
+            const currentY = e.changedTouches[0].screenY;
+            const diffX = currentX - touchStartX;
+            const diffY = currentY - touchStartY;
+            
+            // Verhindere Standard-Scrolling
+            e.preventDefault();
+            
+            // Visuelles Feedback beim Swipen
+            if (Math.abs(diffX) > Math.abs(diffY)) {
+                // Horizontales Swipen - für Navigation zwischen Zertifikaten
+                modalImg.style.transform = `translateX(${diffX * 0.5}px)`;
+            } else {
+                // Vertikales Swipen - für Schließen
+                modalImg.style.transform = `translateY(${diffY * 0.5}px)`;
+                // Opacity verringern beim nach unten/oben ziehen
+                const opacity = Math.max(0.3, 1 - Math.abs(diffY) / 500);
+                modalImg.style.opacity = opacity;
+            }
+            modalImg.style.transition = 'none';
+        }, { passive: false });
+
+        modalImg.addEventListener('touchend', function(e) {
+            touchEndX = e.changedTouches[0].screenX;
+            touchEndY = e.changedTouches[0].screenY;
+            
+            const diffX = touchEndX - touchStartX;
+            const diffY = touchEndY - touchStartY;
+            
+            // Minimum Swipe-Distanz
+            const minSwipeDistance = 70;
+            
+            // Bestimme ob horizontales oder vertikales Swipen
+            if (Math.abs(diffX) > Math.abs(diffY)) {
+                // Horizontales Swipen - durch Zertifikate navigieren
+                if (Math.abs(diffX) > minSwipeDistance) {
+                    modalImg.style.transition = 'transform 0.3s ease, opacity 0.3s ease';
+                    
+                    if (diffX > 0) {
+                        // Swipe nach rechts - vorheriges Zertifikat
+                        modalImg.style.transform = 'translateX(100%)';
+                        modalImg.style.opacity = '0';
+                        
+                        setTimeout(() => {
+                            showCertificate(currentCertificateIndex - 1);
+                            modalImg.style.transition = 'none';
+                            modalImg.style.transform = 'translateX(-100%)';
+                            modalImg.style.opacity = '0';
+                            
+                            setTimeout(() => {
+                                modalImg.style.transition = 'transform 0.3s ease, opacity 0.3s ease';
+                                modalImg.style.transform = 'translateX(0)';
+                                modalImg.style.opacity = '1';
+                            }, 50);
+                        }, 300);
+                    } else {
+                        // Swipe nach links - nächstes Zertifikat
+                        modalImg.style.transform = 'translateX(-100%)';
+                        modalImg.style.opacity = '0';
+                        
+                        setTimeout(() => {
+                            showCertificate(currentCertificateIndex + 1);
+                            modalImg.style.transition = 'none';
+                            modalImg.style.transform = 'translateX(100%)';
+                            modalImg.style.opacity = '0';
+                            
+                            setTimeout(() => {
+                                modalImg.style.transition = 'transform 0.3s ease, opacity 0.3s ease';
+                                modalImg.style.transform = 'translateX(0)';
+                                modalImg.style.opacity = '1';
+                            }, 50);
+                        }, 300);
+                    }
+                } else {
+                    // Zu kurzer Swipe - zurück zur ursprünglichen Position
+                    modalImg.style.transition = 'transform 0.3s ease, opacity 0.3s ease';
+                    modalImg.style.transform = 'translateX(0)';
+                    modalImg.style.opacity = '1';
+                }
+            } else {
+                // Vertikales Swipen - Modal schließen
+                if (Math.abs(diffY) > minSwipeDistance) {
+                    modalImg.style.transition = 'transform 0.3s ease, opacity 0.3s ease';
+                    
+                    if (diffY > 0) {
+                        // Swipe nach unten - Modal schließen
+                        modalImg.style.transform = 'translateY(100vh)';
+                    } else {
+                        // Swipe nach oben - Modal schließen
+                        modalImg.style.transform = 'translateY(-100vh)';
+                    }
+                    
+                    modalImg.style.opacity = '0';
+                    
+                    // Modal nach Animation schließen
+                    setTimeout(() => {
+                        modal.style.display = 'none';
+                        document.body.style.overflow = 'auto';
+                        // Reset transform
+                        modalImg.style.transform = 'translateY(0)';
+                        modalImg.style.opacity = '1';
+                        modalImg.style.transition = '';
+                    }, 300);
+                } else {
+                    // Zu kurzer Swipe - zurück zur ursprünglichen Position
+                    modalImg.style.transition = 'transform 0.3s ease, opacity 0.3s ease';
+                    modalImg.style.transform = 'translateY(0)';
+                    modalImg.style.opacity = '1';
+                }
+            }
+        });
+    }
 });
 
 
